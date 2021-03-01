@@ -1,0 +1,102 @@
+version: "3"
+
+networks:
+  app-tier:
+    name: laravel_scratch
+    driver: bridge
+
+volumes:
+  app:
+    name: laravel_scratch_app
+    driver: "local"
+  mysql:
+    name: laravel_scratch_mysql
+    driver: "local"
+  redis:
+    name: laravel_scratch_redis
+    driver: "local"
+
+services:
+  app:
+    image: laravel-app
+    container_name: laravel-app
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - .docker.env
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app-tier
+    ports:
+      - 8080:80
+    volumes:
+      # - app:/var/www/html/storage
+      - .:/var/www/html
+      - /var/www/html/node_modules/
+      - /var/www/html/vendor/
+
+  scheduler:
+    image: laravel-app
+    container_name: laravel-scheduler
+    environment:
+      CONTAINER_ROLE: scheduler
+    env_file:
+      - .docker.env
+    depends_on:
+      - app
+      - mysql
+      - redis
+    networks:
+      - app-tier
+    volumes:
+      # - app:/var/www/html/storage
+      - .:/var/www/html
+      - /var/www/html/node_modules/
+      - /var/www/html/vendor/
+
+  queue:
+    image: laravel-app
+    container_name: laravel-queue
+    environment:
+      CONTAINER_ROLE: queue
+    env_file:
+      - .docker.env
+    depends_on:
+      - app
+      - mysql
+      - redis
+    networks:
+      - app-tier
+    volumes:
+      # - app:/var/www/html/storage
+      - .:/var/www/html
+      - /var/www/html/node_modules/
+      - /var/www/html/vendor/
+
+  mysql:
+    image: mysql:latest
+    container_name: laravel-mysql
+    networks:
+     - app-tier
+    ports:
+      - 13306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+
+  redis:
+    container_name: laravel-redis
+    image: redis:4-alpine
+    networks:
+      - app-tier
+    ports:
+      - 16379:6379
+    volumes:
+      - redis:/data
