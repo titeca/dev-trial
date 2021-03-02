@@ -2,24 +2,24 @@ version: "3"
 
 networks:
   app-tier:
-    name: laravel_scratch
+    name: titeca_dev_trial
     driver: bridge
 
 volumes:
   app:
-    name: laravel_scratch_app
+    name: titeca_dev_trial_app
     driver: "local"
   mysql:
-    name: laravel_scratch_mysql
+    name: titeca_dev_trial_mysql
     driver: "local"
   redis:
-    name: laravel_scratch_redis
+    name: titeca_dev_trial_redis
     driver: "local"
 
 services:
   app:
     image: laravel-app
-    container_name: laravel-app
+    container_name: titeca-dev-trial-app
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -40,7 +40,7 @@ services:
 
   scheduler:
     image: laravel-app
-    container_name: laravel-scheduler
+    container_name: titeca-dev-trial-scheduler
     environment:
       CONTAINER_ROLE: scheduler
     env_file:
@@ -59,7 +59,7 @@ services:
 
   queue:
     image: laravel-app
-    container_name: laravel-queue
+    container_name: titeca-dev-trial-queue
     environment:
       CONTAINER_ROLE: queue
     env_file:
@@ -78,7 +78,7 @@ services:
 
   mysql:
     image: mysql:latest
-    container_name: laravel-mysql
+    container_name: titeca-dev-trial-mysql
     networks:
      - app-tier
     ports:
@@ -92,7 +92,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
 
   redis:
-    container_name: laravel-redis
+    container_name: titeca-dev-trial-redis
     image: redis:4-alpine
     networks:
       - app-tier
