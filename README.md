@@ -2,7 +2,7 @@
 
 ## Setup
 
-* Clone deze repository deze naar je lokale development omgeving;
+* Clone deze repository naar je lokale development omgeving;
 * Installeer indien dit nog niet het geval is, docker op je computer;
 * Kopieer de bestanden `.docker.env.example` en`.env.example` en hernoem deze naar `.docker.env` en`.env`;
 * Breng de DEV-omgeving vervolgens live via het commando `docker-compose up --build -d`;
