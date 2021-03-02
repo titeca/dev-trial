@@ -19,7 +19,7 @@
 
 ## Handige links
 
-* [Documentatie laravel]<https://laravel.com/docs>
-* [Documentatie API Exact-Online]<https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Content-restrefdocs>
-* [Aanvraag voor een Exact proefaccount]<https://www.exact.com/benl/producten/accountancy/probeer/professional>
-* [Insomnia download]<https://insomnia.rest/download/>
+* [Documentatie laravel](https://laravel.com/docs)
+* [Documentatie API Exact-Online](https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Content-restrefdocs)
+* [Aanvraag voor een Exact proefaccount](https://www.exact.com/benl/producten/accountancy/probeer/professional)
+* [Insomnia download](https://insomnia.rest/download/)
